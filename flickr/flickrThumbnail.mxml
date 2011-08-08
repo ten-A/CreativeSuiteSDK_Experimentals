@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication 	xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:aral="*" 
+	creationComplete="photoService.send();">
+	<mx:HTTPService id="photoService" 	url="http://api.flickr.com/services/feeds/photos_public.gne" resultFormat="e4x"
+		result="photoResultHandler(event);" fault="photoFaultHandler(event);">
+		<mx:request>
+			<format>atom</format>
+		</mx:request>
+   </mx:HTTPService>
+	
+	<mx:Script>
+		<![CDATA[
+			import flash.net.*;
+			import mx.controls.Alert;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import flash.events.*; 
+			import flash.filesystem.*;
+			import com.adobe.csawlib.illustrator.Illustrator;
+			import com.adobe.illustrator.*;
+
+			private var app:com.adobe.illustrator.Application = Illustrator.app;
+			private var doc:Document = app.documents.add();
+			private var txFrame:TextFrame = doc.textFrames.add();
+
+			private var fileName:String;
+
+			private var hostName:String = HostObject.mainExtension;
+			private var FileGet:URLLoader;
+			[Bindable] private var photoFeed:XML;
+
+			private namespace atom = "http://www.w3.org/2005/Atom";
+			use namespace atom;
+
+			private function parseImageUrl(fromHtml:XMLList):String
+			{
+				var pattern:RegExp = /img src="(.+?)" /;
+				var results:Array = pattern.exec(fromHtml);
+				var imageURL:String = results[1];
+				return imageURL;
+			}
+
+			private function photoResultHandler(event:ResultEvent):void
+			{
+				photoFeed = event.result as XML;
+			}
+
+			private function photoFaultHandler(event:FaultEvent):void
+			{
+				Alert.show(event.fault.message, "Could not load photo feed");
+			}
+
+
+			private function getCon(evt:MouseEvent):void
+			{
+				FileGet = new URLLoader();
+				FileGet.dataFormat = URLLoaderDataFormat.BINARY;
+				FileGet.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
+				FileGet.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+				FileGet.addEventListener(Event.COMPLETE, onComplete);
+				txFrame.contents = String(evt.currentTarget.source) + " Download Start.\r";
+				var pattern:RegExp = /http:\/\/.+\/.+\/(.+\..+)/;
+				var fNm:Array = pattern.exec(evt.currentTarget.source);
+				fileName = fNm[1].replace("m.","b.");
+				var tgtadd:String = String(evt.currentTarget.source).replace("m.","b.");
+				txFrame.contents = tgtadd + " Download Start.\r";
+				var request:URLRequest = new URLRequest(tgtadd);
+				FileGet.load(request);
+			}
+
+			private function onIOError(evt:IOErrorEvent):void
+			{
+				txFrame.contents += "There was an IO Error.\r";
+				txFrame.contents += "Could not place Image.\r";
+			}
+
+			private function onSecurityError(evt:Event):void
+			{
+				txFrame.contents	+= "There was a security error.\r";
+			}
+
+			private function onComplete(evt:Event):void
+			{
+				txFrame.contents	+= "File was successfully downloaded.\r";
+				txFrame.contents	+= "SIZE=" + FileGet.bytesTotal + "\r";
+				var desktop_file : File = File.desktopDirectory;
+				var file : File = desktop_file.resolvePath(fileName);
+				var stream:FileStream = new FileStream();
+				try
+				{
+					stream.open(file,FileMode.WRITE);
+					stream.writeBytes(FileGet.data);
+					var getFileNm:String = file.nativePath;
+					txFrame.contents += getFileNm + " Output Successful.\r";
+				}
+				catch(error:IOError)
+				{
+					txFrame.contents	+= "File Output Error.\r";
+				}
+				finally
+				{
+					stream.close();
+					var obj:PlacedItem = doc.placedItems.add();
+					obj.file = file;
+					obj.height = obj.height*0.5;
+					obj.width = obj.width*0.5;
+					obj.left = 50;
+					obj.top = 200 + obj.height;
+				}
+			}
+		]]>
+	</mx:Script>
+
+	<mx:Fade id="fadeIn" duration="1500" alphaFrom="0" alphaTo="1"/>
+	<mx:Fade id="fadeOut" duration="1500" alphaFrom="1" alphaTo="0"/>
+	<mx:VBox height="100%" width="100%" verticalAlign="top" horizontalAlign="right">
+		<mx:Button id="monButton" label="refresh" click="photoService.send();"/>
+		<mx:Tile width="100%" height="100%">
+			<mx:Repeater id="photos" dataProvider="{photoFeed.entry}">
+				<mx:Box 
+					xmlns:mx="http://www.adobe.com/2006/mxml" 
+					textAlign="center">
+					<mx:Image id="myImage" source="{parseImageUrl(photos.currentItem.content)}"
+						completeEffect="{fadeIn}" scaleX="0.3" scaleY="0.3" click="getCon(event);"/>
+				</mx:Box>	
+			</mx:Repeater>
+		</mx:Tile>
+		<mx:ControlBar horizontalAlign="center">
+		</mx:ControlBar>
+	</mx:VBox>
+</mx:WindowedApplication>
