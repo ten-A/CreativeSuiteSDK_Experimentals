@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" 
+ layout="absolute" width="400" height="200">
+
+	<mx:Script>
+		<![CDATA[
+			import com.adobe.csawlib.illustrator.Illustrator;
+			import com.adobe.illustrator.*;
+
+			private function aply():void
+			{
+				var app:com.adobe.illustrator.Application = Illustrator.app;
+				var chrs:Characters = app.activeDocument.textFrames.index(0).characters;
+				var len:int = chrs.length;
+				var styl:CharacterStyle = app.activeDocument.characterStyles.index(1);
+				var t1:Date = new Date();
+				var sec1:int = t1.getTime();
+				for(var i:int=0;i<len;i++)
+					{
+						styl.applyTo(chrs.index(i));
+					}
+				var t2:Date = new Date();
+				var sec2:int = t2.getTime();
+				app.activeDocument.textFrames.add();
+				app.activeDocument.textFrames.index(0).contents = ((sec2-sec1)/1000)+"";
+			}
+		]]>
+	</mx:Script>
+	<mx:Button id="applyBtn" label="apply" click="aply()"/>
+</mx:WindowedApplication>
