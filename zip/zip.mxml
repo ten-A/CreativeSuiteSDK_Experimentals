@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?> 
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" > 
+	<mx:Script> 
+		<![CDATA[ 
+			import flash.filesystem.*;
+			import flash.utils.ByteArray;
+			import flash.events.Event;
+
+			private var bytes:ByteArray = new ByteArray();
+				private var fileName:String = new String();
+			private var flNameLength:uint;
+			private var xfldLength:uint;
+			private var offset:uint;
+			private var compSize:uint;
+			private var uncompSize:uint;
+			private var compMethod:int;
+			private var signature:int;
+			private var dskTpfile:File = File.desktopDirectory;
+			private var zStream:FileStream = new FileStream();	
+
+			private function doExt():void 
+			{
+				var zfile:File = dskTpfile.resolvePath(fileNm.text);
+				zStream.open(zfile, FileMode.READ);
+				bytes.endian = Endian.LITTLE_ENDIAN;
+				while (zStream.position<zfile.size) 
+				{
+					zStream.readBytes(bytes, 0, 30);//first 30 bytes read (headder info)
+					bytes.position = 0;
+					signature = bytes.readInt();
+					if (signature != 0x04034b50)  //check fileheadder signature
+					{ 
+						break;
+					}
+					bytes.position = 8;
+					compMethod = bytes.readByte();
+					offset = 0;
+					bytes.position = 26;	
+					flNameLength = bytes.readShort();//get file name
+					offset += flNameLength;//add length of file name
+					bytes.position = 28;	
+					xfldLength = bytes.readShort();
+					offset += xfldLength;// add length of extra field
+					bytes.position = 18;
+					compSize = bytes.readUnsignedInt(); //get size of compressed portion
+					bytes.position = 22; // offset to uncompressed size
+					uncompSize = bytes.readUnsignedInt(); //get uncompressed size
+					zStream.readBytes(bytes, 30, offset);			bytes.position = 30; 
+					fileName = bytes.readUTFBytes(flNameLength);
+					messages.text += fileName + "\n";
+					messages.text += "\tCompressed size is: " + compSize + '\n';
+					messages.text += "\tUncompressed size is: " + uncompSize + '\n';
+					zStream.readBytes(bytes, 0, compSize);	
+					if (compMethod == 8) //decompress if file compressed
+					{ 
+						bytes.uncompress(CompressionAlgorithm.DEFLATE);
+					} 
+					saveFile(fileName, bytes);	
+				}
+			}
+
+			private function saveFile(fileName:String, data:ByteArray):void 
+			{ 
+				var dstFile:File = File.desktopDirectory;	
+				var svFile:File = dstFile.resolvePath(fileName);		var svStream:FileStream = new FileStream();
+				svStream.open(svFile, FileMode.WRITE);
+				svStream.writeBytes(data, 0, data.length);
+				svStream.close();
+			} 
+		]]> 
+	</mx:Script> 
+	<mx:Form> 
+		<mx:FormItem label="decompress">
+			<mx:Button id="ext" label="apply" click="doExt();" />
+			<mx:TextInput id="fileNm" width="200" text="test.zip" /> 
+			<mx:TextArea id="messages" width="320" height="150"/> 
+		</mx:FormItem> 
+	</mx:Form> 
+</mx:WindowedApplication>
