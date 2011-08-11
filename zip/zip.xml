@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<application
+    xmlns="http://ns.adobe.com/air/application/2.6"
+    minimumPatchLevel="0">
+    <id>net.sytes.chuwa.zip</id>
+    <name>
+        <text xml:lang="en">net.sytes.chuwa.zip</text>
+    </name>
+    <versionNumber>0.1.1</versionNumber>
+    <versionLabel>0.1 alpha</versionLabel>
+    <filename>zip</filename>
+    <description>
+        <text xml:lang="en">decompress test.</text>
+        <text xml:lang="ja">ASによるzip解凍テスト。</text>
+    </description>
+    <copyright>Copyright 2011, Ten A.</copyright>
+    <initialWindow>
+        <content>./zip.swf</content>
+        <title>Decompress</title>
+        <systemChrome>standard</systemChrome>
+        <transparent>false</transparent>
+        <visible>false</visible>
+        <minimizable>true</minimizable>
+        <maximizable>true</maximizable>
+        <resizable>true</resizable>
+        <width>350</width>
+        <height>280</height>
+        <x>150</x>
+        <y>150</y>
+        <minSize>300 300</minSize>
+        <maxSize>640 600</maxSize>
+    </initialWindow>
+    <icon>
+        <image16x16>./icons/AIRApp_16.png</image16x16>
+        <image32x32>./icons/AIRApp_32.png</image32x32>
+        <image48x48>./icons/AIRApp_48.png</image48x48>
+        <image128x128>./icons/AIRApp_128.png</image128x128>
+    </icon>
+    <customUpdateUI>false</customUpdateUI>
+    <allowBrowserInvocation>false</allowBrowserInvocation>
+    <fileTypes>
+        <fileType>
+            <name>net.sytes.chuwa</name>
+            <extension>xmpl</extension>
+            <description>zip</description>
+            <contentType>example/x-data-type</contentType>
+        </fileType>
+    </fileTypes>
+</application>
