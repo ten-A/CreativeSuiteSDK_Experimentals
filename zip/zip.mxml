@@ -7,7 +7,7 @@
 			import flash.events.Event;
 
 			private var bytes:ByteArray = new ByteArray();
-				private var fileName:String = new String();
+			private var fileName:String = new String();
 			private var flNameLength:uint;
 			private var xfldLength:uint;
 			private var offset:uint;
@@ -48,8 +48,8 @@
 					zStream.readBytes(bytes, 30, offset);			bytes.position = 30; 
 					fileName = bytes.readUTFBytes(flNameLength);
 					messages.text += fileName + "\n";
-					messages.text += "\tCompressed size is: " + compSize + '\n';
-					messages.text += "\tUncompressed size is: " + uncompSize + '\n';
+					messages.text += "\tCompressed size = " + compSize + '\n';
+					messages.text += "\tUncompressed size = " + uncompSize + '\n';
 					zStream.readBytes(bytes, 0, compSize);	
 					if (compMethod == 8) //decompress if file compressed
 					{ 
