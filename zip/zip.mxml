@@ -1,79 +1,84 @@
-<?xml version="1.0" encoding="utf-8"?> 
-<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical" > 
-	<mx:Script> 
-		<![CDATA[ 
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical">
+	<mx:Script>
+		<![CDATA[
 			import flash.filesystem.*;
 			import flash.utils.ByteArray;
 			import flash.events.Event;
 
 			private var bytes:ByteArray = new ByteArray();
 			private var fileName:String = new String();
-			private var flNameLength:uint;
-			private var xfldLength:uint;
+			private var fNmLen:uint;
+			private var xtrFldLen:uint;
 			private var offset:uint;
-			private var compSize:uint;
+			private var cmpSize:uint;
 			private var uncompSize:uint;
 			private var compMethod:int;
 			private var signature:int;
 			private var dskTpfile:File = File.desktopDirectory;
-			private var zStream:FileStream = new FileStream();	
+			private var zStream:FileStream = new FileStream();
 
 			private function doExt():void 
 			{
+				//get headder information
 				var zfile:File = dskTpfile.resolvePath(fileNm.text);
 				zStream.open(zfile, FileMode.READ);
 				bytes.endian = Endian.LITTLE_ENDIAN;
-				while (zStream.position<zfile.size) 
+				while (zStream.position<zfile.size) //loop include files length
 				{
-					zStream.readBytes(bytes, 0, 30);//first 30 bytes read (headder info)
+					zStream.readBytes(bytes, 0, 30); //first 30 bytes read (headder info)
 					bytes.position = 0;
 					signature = bytes.readInt();
-					if (signature != 0x04034b50)  //check fileheadder signature
-					{ 
+					if (signature != 0x04034b50) //check fileheadder signature (PK34)
+					{
 						break;
 					}
 					bytes.position = 8;
-					compMethod = bytes.readByte();
+					cmpMethod = bytes.readByte();
 					offset = 0;
-					bytes.position = 26;	
-					flNameLength = bytes.readShort();//get file name
-					offset += flNameLength;//add length of file name
-					bytes.position = 28;	
-					xfldLength = bytes.readShort();
-					offset += xfldLength;// add length of extra field
+					bytes.position = 26;
+					fNmLen = bytes.readShort();//get file name
+					offset += fNmLen; //add length of file name
+					bytes.position = 28;
+					xtrFldLen = bytes.readShort();
+					offset += xtrFldLen; // add length of extra field
 					bytes.position = 18;
 					compSize = bytes.readUnsignedInt(); //get size of compressed portion
 					bytes.position = 22; // offset to uncompressed size
 					uncompSize = bytes.readUnsignedInt(); //get uncompressed size
-					zStream.readBytes(bytes, 30, offset);			bytes.position = 30; 
+					zStream.readBytes(bytes, 30, offset);
+					bytes.position = 30;
 					fileName = bytes.readUTFBytes(flNameLength);
 					messages.text += fileName + "\n";
-					messages.text += "\tCompressed size = " + compSize + '\n';
-					messages.text += "\tUncompressed size = " + uncompSize + '\n';
-					zStream.readBytes(bytes, 0, compSize);	
-					if (compMethod == 8) //decompress if file compressed
-					{ 
+					messages.text += "Compressed size = " + compSize + '\n';
+					messages.text += "Uncompressed size = " + uncompSize + '\n';
+
+					//load data body
+					zStream.readBytes(bytes, 0, compSize);
+					if (cmpMethod == 8) //decompress if file compressed
+					{
 						bytes.uncompress(CompressionAlgorithm.DEFLATE);
-					} 
-					saveFile(fileName, bytes);	
+					}
+					saveFile(fileName, bytes);
 				}
 			}
 
 			private function saveFile(fileName:String, data:ByteArray):void 
-			{ 
+			{
 				var dstFile:File = File.desktopDirectory;	
-				var svFile:File = dstFile.resolvePath(fileName);		var svStream:FileStream = new FileStream();
+				var svFile:File = dstFile.resolvePath(fileName);
+				var svStream:FileStream = new FileStream();
 				svStream.open(svFile, FileMode.WRITE);
 				svStream.writeBytes(data, 0, data.length);
 				svStream.close();
-			} 
-		]]> 
-	</mx:Script> 
-	<mx:Form> 
+			}
+		]]>
+	</mx:Script>
+	<mx:Form>
 		<mx:FormItem label="decompress">
 			<mx:Button id="ext" label="apply" click="doExt();" />
-			<mx:TextInput id="fileNm" width="200" text="test.zip" /> 
-			<mx:TextArea id="messages" width="320" height="150"/> 
-		</mx:FormItem> 
-	</mx:Form> 
+			<mx:TextInput id="fileNm" width="200" text="test.zip" />
+			<mx:TextArea id="messages" width="320" height="150"/>
+		</mx:FormItem>
+	</mx:Form>
 </mx:WindowedApplication>
