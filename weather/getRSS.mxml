@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" 
+ layout="absolute" width="400" height="330">
+
+	<mx:Script>
+		<![CDATA[
+			import flash.events.*; 
+			import flash.net.URLRequest;
+			import flash.net.URLLoader;
+			import flash.filesystem.*;
+
+			private var hostName:String = HostObject.mainExtension;
+			private var serverSocket:ServerSocket;
+			public var FileGet:URLLoader;
+
+			private function getCon():void
+			{
+				FileGet = new URLLoader();
+				FileGet.dataFormat = URLLoaderDataFormat.TEXT;
+				FileGet.addEventListener(IOErrorEvent.IO_ERROR, onIOError);
+				FileGet.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onSecurityError);
+				FileGet.addEventListener(Event.COMPLETE, onComplete);
+				var source:String = targetRSS.text;
+				Message.text	+= source + "RSS download Start.\n";
+				var request:URLRequest = new URLRequest(source);
+				FileGet.load(request);
+			}
+
+			private function onIOError(evt:IOErrorEvent):void
+			{
+				Message.text += "There was an IO Error.\n";
+				Message.text += "Could not update variables.\n";
+			}
+
+			private function onSecurityError(evt:Event):void
+			{
+				Message.text	+= "There was a security error.\n";
+			}
+
+			private function onComplete(evt:Event):void
+			{
+				Message.text	+= "data update start...";
+				Message.text	+= FileGet.data
+				if (updater.run(FileGet.data))
+					{
+						Message.text	+= "data update finished";
+					}
+			}
+		]]>
+	</mx:Script>
+	<mx:VBox paddingTop="10" horizontalCenter="0">
+		<mx:Button id="doExe" label="get RSS" click="getCon()"/>
+		<mx:TextInput id="targetRSS" width="350" 
+			text="http://rss.weather.yahoo.co.jp/rss/days/6510.xml"/>
+		<mx:TextArea id="Message" width="350" height="160" text=""/>
+	</mx:VBox>
+</mx:WindowedApplication>
