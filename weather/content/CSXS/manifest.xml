@@ -19,7 +19,7 @@
 		<Extension Id="net.sytes.chuwa.weather">
 			<DispatchInfo>
 				<Resources>
-					<SwfPath>./weather.swf</SwfPath>
+					<SwfPath>./getRSS.swf</SwfPath>
 				</Resources>
 				<Lifecycle>
 					<AutoVisible>true</AutoVisible>
