@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="vertical">
+	<mx:Script>
+		<![CDATA[
+			import mx.events.DataGridEventReason;
+			import mx.events.DataGridEvent;
+			import mx.events.ItemClickEvent;
+			import mx.events.FlexEvent;
+			import mx.collections.ArrayCollection;
+			import flash.events.Event;
+			import flash.data.SQLResult;
+			import flash.data.SQLStatement;
+			import flash.data.SQLConnection;
+			import flash.filesystem.File;
+			import com.adobe.csawlib.illustrator.Illustrator;
+			import com.adobe.illustrator.*;
+
+			private var conn:SQLConnection;
+			private var stm:SQLStatement;
+
+			[Bindable] private var dp:ArrayCollection = new ArrayCollection();
+
+			private function readDB():void 
+			{
+				message.text += "Start processing...\n";
+				var tgDB:File = File.desktopDirectory.resolvePath(DBName.text + ".db");
+				conn = new SQLConnection();
+				conn.addEventListener(SQLEvent.OPEN, connOpen);
+				conn.addEventListener(SQLErrorEvent.ERROR, connErr);
+				conn.open(tgDB);
+			}
+
+			private function connOpen(event:SQLEvent):void 
+			{
+				stm = new SQLStatement();
+				stm.sqlConnection = conn;
+				stm.text = "CREATE TABLE IF NOT EXISTS " + DBName.text + " ("+
+					" no INTEGER PRIMARY KEY NOT NULL,"+
+					" Title TEXT,"+
+					" mail TEXT,"+
+					" cell TEXT,"+
+					" psName TEXT"+")";
+				stm.addEventListener(SQLEvent.RESULT, stmCreRslt);
+				stm.addEventListener(SQLErrorEvent.ERROR,stmErr);
+				stm.execute();
+			}
+
+			private function stmCreRslt(event:SQLEvent):void 
+			{
+				message.text += "Connect database...\n";
+				getData();
+			}
+
+			private function getData():void 
+			{
+				stm = new SQLStatement();
+				stm.sqlConnection =  conn;
+				stm.text = "SELECT no, psName, mail, Title, cell FROM " + DBName.text;
+				stm.addEventListener(SQLEvent.RESULT, getDatRslt);
+				stm.addEventListener(SQLErrorEvent.ERROR, stmErr);
+				stm.execute();
+			}
+
+			private function getDatRslt(event:SQLEvent):void 
+			{
+				message.text += "update DataGrid.\n";
+				var result:SQLResult = stm.getResult();
+				if (result.data==null) return;
+				dp = new ArrayCollection(result.data);
+			}
+
+			private function insBtnClick(event:Event):void 
+			{
+				stm = new SQLStatement();
+				stm.sqlConnection = conn;
+				stm.text = "INSERT INTO " + DBName.text + " (no, psName, mail, Title, cell)" 
+					+ " VALUES (Null," + "'" + psName.text + "'," + "'" + mail.text + "'," 
+					+ "'" + Title.text +"'," + "'"+ cell.text + "')";
+				stm.addEventListener(SQLEvent.RESULT, stmInsRslt);
+				stm.addEventListener(SQLErrorEvent.ERROR, stmErr);
+				stm.execute();
+			}
+
+			private function stmInsRslt(event:SQLEvent):void 
+			{
+				message.text += "insert a record...\n";
+				getData();
+			}
+
+			private function delBtnClick(event:Event):void 
+			{
+				var item:Object = datGrid.selectedItem;
+				var no:int = item.no;
+				stm = new SQLStatement();
+				stm.sqlConnection = conn;
+				stm.text = "DELETE FROM " + DBName.text + " WHERE no=" + no;
+				stm.addEventListener(SQLEvent.RESULT, stmDelRslt);
+				stm.addEventListener(SQLErrorEvent.ERROR, stmErr);
+				stm.execute();
+			}
+
+			private function stmDelRslt(event:SQLEvent):void 
+			{
+				message.text += "delete target record finished...\n";
+				getData();
+			}
+
+			private function datGridEdit(event:DataGridEvent):void 
+			{
+				if (event.dataField=="no") event.preventDefault();
+			}
+
+			private function datGridEditEnd(event:DataGridEvent):void 
+			{
+				if (event.reason==DataGridEventReason.CANCELLED) return;
+				var datGrid:DataGrid = event.currentTarget as DataGrid;
+				var item:Object = event.itemRenderer.data;
+				var dataField:String = event.dataField;	
+				var itemEditor:Object = datGrid.itemEditorInstance;
+				if (itemEditor.text==item[dataField]) return;
+				stm = new SQLStatement();
+				stm.sqlConnection = conn;
+				stm.text = "UPDATE " + DBName.text + " SET " + dataField +" = :" 
+					+ dataField + " WHERE no = :no";
+				stm.parameters[":no"] = item.no;
+				stm.parameters[":"+dataField] = itemEditor.text;
+				stm.addEventListener(SQLEvent.RESULT, stmUpdateRslt);
+				stm.addEventListener(SQLErrorEvent.ERROR, stmErr);
+				stm.execute();
+			}
+
+			private function editClick(event:Event):void 
+			{
+				var app:com.adobe.illustrator.Application = Illustrator.app;
+				var doc:Document = app.activeDocument;
+				var layer:Layer = doc.layers.index(1);
+				var item:Object = datGrid.selectedItem;
+				var txFrm:TextFrames = layer.textFrames;
+				message.text += "CREATE a DOCUMENT.\n";
+				txFrm.index(0).contents = item.cell;
+				txFrm.index(1).contents = item.mail;
+				txFrm.index(2).contents = item.Title;
+				txFrm.index(3).contents = item.psName;
+				var svFile:File = File.desktopDirectory.resolvePath(item.psName+".ai");
+				doc.saveAs(svFile);
+			}
+
+			private function stmUpdateRslt(event:SQLEvent):void 
+			{
+				message.text += "update target record finished.\n";
+				getData();
+			}
+
+			private function stmErr(event:SQLErrorEvent):void 
+			{
+				message.text += event.error.message + "\n";
+			}
+
+			private function connErr(event:SQLEvent):void
+			{
+				message.text += "Could not connect Database\n";
+			}
+		]]>
+	</mx:Script>
+		<mx:TabNavigator width="100%" height="100%" top="0" left="0">
+			<mx:VBox label="Data View" width="100%" height="100%">
+				<mx:VBox height="100%" paddingLeft="5">
+					<mx:HBox width="100%" paddingLeft="5">
+						<mx:TextInput id="psName" text="Name" width="50%"/>
+						<mx:TextInput id="mail" text="Mail" width="50%"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:TextInput id="Title" text="Title" width="40%"/>
+						<mx:TextInput id="cell" text="Cell" width="40%"/>
+					</mx:HBox>
+					<mx:HBox width="100%">
+						<mx:Button id="insBtn" label="insert" click="insBtnClick(event)" />
+						<mx:Button id="delBtn" label="delete" click="delBtnClick(event)" />
+						<mx:Button id="editBtn" label="edit" click="editClick(event)" />
+					</mx:HBox>
+					<mx:DataGrid id="datGrid" width="100%" height="100%" dataProvider="{dp}"
+						editable="true" itemEditBeginning="datGridEdit(event)" 
+						itemEditEnd="datGridEditEnd(event)">
+						<mx:columns>
+							<mx:DataGridColumn width="30" dataField="no" headerText="No" />
+							<mx:DataGridColumn width="120" dataField="psName" headerText="name" />
+							<mx:DataGridColumn width="130" dataField="mail" headerText="mail" />
+							<mx:DataGridColumn width="70" dataField="Title" headerText="title" />
+							<mx:DataGridColumn width="100" dataField="cell" headerText="cell" />
+						</mx:columns>
+					</mx:DataGrid>
+				</mx:VBox>
+			</mx:VBox>
+			<mx:VBox label="set DB Name" width="100%" height="100%">
+				<mx:VBox paddingLeft="5">
+					<mx:HBox>
+						<mx:TextInput id="DBName" text="database1" />
+						<mx:Button id="dbApply" label="apply" click="readDB()"/>
+						</mx:HBox>
+						<mx:TextArea id="message" width="290" height="320" />
+					</mx:VBox>
+			</mx:VBox>
+		</mx:TabNavigator>
+</mx:WindowedApplication>
