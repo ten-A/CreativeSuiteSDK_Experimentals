@@ -30,10 +30,10 @@ $._slct_ILST={
 	inverse : function(){
 		app.executeMenuCommand('Inverse menu item'); 
 		},
-	nextObj : function(){
+	nextObj : function(){ //select next object
 		app.executeMenuCommand('Selection Hat 9'); 
 		},
-	previouseObj : function(){
+	previouseObj : function(){ //select previouse object
 		app.executeMenuCommand('Selection Hat 8'); 
 		},
 	symbolInst : function(){
@@ -72,13 +72,13 @@ $._slct_ILST={
 	appearlanceAttribute : function(){
 		app.executeMenuCommand('Find Appearance Attributes menu item'); 
 		},
-	directionHandle : function(){
+	directionHandle : function(){ //select direction handle
 		app.executeMenuCommand('Selection Hat 1');
 		},
 	allinArtboard : function(){
 		app.executeMenuCommand('selectallinartboard'); 
 		},
-	nonfitPixgrid : function(){
+	nonfitPixgrid : function(){ //select nonfit pixel grid object
 		app.executeMenuCommand('Selection Hat 12');
 		}
 	};
