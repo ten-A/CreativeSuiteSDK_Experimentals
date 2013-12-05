@@ -24,7 +24,7 @@
 				var fl = cep.fs.showOpenDialog(false,false,"Select File",null,[])
 				//var cb = csInterface.getExtensions(["com.adobe.exchange"]); 
 						document.getElementById("message").innerHTML 
-						= fl.err;
+				= fl.data; //In this case, we get selected files full path. fl.err : get ERR code.
 		});
 	}
 
