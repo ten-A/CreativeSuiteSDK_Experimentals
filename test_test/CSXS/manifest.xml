@@ -11,7 +11,7 @@
 			<Host Name="ILST" Version="[17.0,17.9]" />
 			<Host Name="PHXS" Version="[14.0,14.9]"/>
 			<Host Name="PHSP" Version="[14.0,14.9]"/>
-			<Host Name="IDSN" Version="[9.0,9.9]"/
+			<Host Name="IDSN" Version="[9.0,9.9]"/>
 					</HostList>
 		<LocaleList>
 			<Locale Code="All" />
