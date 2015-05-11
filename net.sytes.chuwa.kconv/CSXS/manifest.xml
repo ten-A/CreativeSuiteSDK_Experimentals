@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ExtensionManifest Version="4.0" ExtensionBundleId="net.sytes.chuwa.kconv" ExtensionBundleVersion="1.0.0"
+		ExtensionBundleName="Kansuji Converter" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Author><![CDATA[Ten.A]]></Author>
+    <Abstract><![CDATA[&quot;Kansuji Converter; is a customized panel for Illustrator CC developed by Edge Code with Creative Cloud Extension Builder for Bracket. Thanks to davidderaedt. Its really fine work.]]></Abstract>
+	<ExtensionList>
+		<Extension Id="net.sytes.chuwa.kconv" Version="1.0" />
+	</ExtensionList>
+	<ExecutionEnvironment>
+		<HostList>
+            <Host Name="ILST" Version="[17.0,18.9]" />
+		</HostList>
+		<LocaleList>
+			<Locale Code="All" />
+		</LocaleList>
+		<RequiredRuntimeList>
+			<RequiredRuntime Name="CSXS" Version="4.0" />
+		</RequiredRuntimeList>
+	</ExecutionEnvironment>
+	<DispatchInfoList>
+		<Extension Id="net.sytes.chuwa.kconv">
+			<DispatchInfo >
+				<Resources>
+				<MainPath>./index.html</MainPath>
+				<ScriptPath>./jsx/hostscript.jsx</ScriptPath>
+				</Resources>
+				<Lifecycle>
+					<AutoVisible>true</AutoVisible>
+				</Lifecycle>
+				<UI>
+					<Type>Panel</Type>
+					<Menu>Kansuji Converter</Menu>
+					<Geometry>
+						<Size>
+							<Height>150</Height>
+							<Width>180</Width>							
+						</Size>
+						<MaxSize>
+							<Height>250</Height>
+							<Width>250</Width>
+						</MaxSize>
+						<MinSize>
+							<Height>120</Height>
+							<Width>150</Width>
+						</MinSize>						
+					</Geometry>
+				</UI>
+			</DispatchInfo>
+		</Extension>
+	</DispatchInfoList>
+</ExtensionManifest>
