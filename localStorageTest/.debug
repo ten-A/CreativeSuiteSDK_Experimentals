@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionList>
+<Extension Id="com.example.helloworld.extension1">
+<HostList>
+<Host Name="PHXS" Port="8000"/>
+<Host Name="IDSN" Port="8001"/>
+<Host Name="AICY" Port="8002"/>
+<Host Name="ILST" Port="8003"/>
+<Host Name="PPRO" Port="8004"/>
+<Host Name="PRLD" Port="8005"/>
+<Host Name="FLPR" Port="8006"/>
+</HostList>
+</Extension>
+</ExtensionList>

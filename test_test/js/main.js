@@ -27,7 +27,8 @@
 				= fl.data; //In this case, we get selected files full path. fl.err : get ERR code.
 		});
 	}
-
+var resourceBundle = cs.initResourceBundle();
+document.write(resourceBundle.key1);
 
 	init();
 }());

@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="http://code.jquery.com/jquery-1.7.2.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#saveButton').click(function(){
+		if(window.localStorage){
+			var s = $('#text1').val();
+			localStorage.setItem("key1", s);
+			window.__adobe_cep__.showDevTools();
+			}
+		});
+	$('#readButton').click(function(){
+		if(window.localStorage){
+			window.alert( localStorage.getItem("key1") );
+			}
+		});
+	});
+</script>
+</head>
+<body>
+<h3>Web Storage</h3>
+
+<h4>保存</h4>
+<div>
+<input type="text" id="text1">
+<button type="button" id="saveButton">Save</button>
+</div>
+
+<h4>読込み</h4>
+<div>
+<button type="button" id="readButton">Read</button>
+</div>
+
+</body>
+</html>
