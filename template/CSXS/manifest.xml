@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionManifest Version="4.0" ExtensionBundleId="com.example.templateExtension" ExtensionBundleVersion="1.0.0"
+		ExtensionBundleName="templateExtension" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<!--エクステンションバンドルIDはアプリケーションがエクステンションを認識するために必要な情報です。通常は所有するURLをリバースしたものとエクステンション名を繋げて利用します。-->
+	<Author><![CDATA[このブラケットの中は製作者の名前を書きます。]]></Author>
+	<Abstract><![CDATA[こちらのブラケット内はエクステンションの概要を書きます。無くてもかまいません]]></Abstract>
+	<ExtensionList>
+	<!--エクステンションIDは前出のExtensionBundleIdと同じものを設定しておきましょう。バージョンもExtensionBundleVersionに合わせます。-->
+		<Extension Id="com.example.templateExtension" Version="1.0.0" />
+	</ExtensionList>
+	<ExecutionEnvironment>
+		<HostList>
+			<!-- 各アプリケーションのHostのコメントアウトを削除して有効化します。バージョンは２種類の書き方があって、数値のみの場合は最低バージョン、数値を配列で用意すると動作可能バージョンレンジとなります。PhotoshopはCC以降スタンダードとエクステンデッドを廃止しましたが、CC以降でもPHXSとPHSP両方を指定して下さい。 -->
+			<!-- Photoshop -->
+			<!-- <Host Name="PHXS" Version="[15.0,15.9]" />-->
+			<!-- <Host Name="PHSP" Version="[15.0,15.9]" />-->
+			<!-- Illustrator -->
+			<!-- <Host Name="ILST" Version="[18.0,18.9]" />-->
+			<!-- InDesign -->
+			<!-- <Host Name="IDSN" Version="[10.0,10.9]" /> -->
+			<!-- InCopy -->
+			<!-- <Host Name="AICY" Version="[10.0,10.9]" /> -->
+			<!-- Premiere -->
+			<!-- <Host Name="PPRO" Version="[8.0,8.9]" /> -->
+			<!-- AfterEffects -->
+			<!-- <Host Name="AEFT" Version="[13.0,13.9]" /> -->
+			<!-- Audition -->
+			<!-- <Host Name="AUDT" Version="8.0" />   -->
+			<!-- PRELUDE -->
+			<!-- <Host Name="PRLD" Version="3.0" />   -->
+			<!-- FLASH Pro -->
+			<!-- <Host Name="FLPR" Version="[14.0,15.9]" /> -->
+		</HostList>
+		<LocaleList>
+			<Locale Code="All" />
+		</LocaleList>
+		<RequiredRuntimeList>
+			<RequiredRuntime Name="CSXS" Version="4.0" /><!--CEPのランタイムバージョンです。下位互換があるのでコンテキストメニューやフライアウトメニュー等が必要なければ低いままでOK。CC2017では7.0となります。-->
+		</RequiredRuntimeList>
+	</ExecutionEnvironment>
+	<DispatchInfoList>
+		<Extension Id="com.example.templateExtension"><!--こちらも前出ものに合わせます-->
+			<DispatchInfo >
+				<Resources>
+				<MainPath>./index.html</MainPath><!--エクステンションのUIとなるHTMLです。テンプレートの構造を改変しない場合はこのままでOK-->
+				<ScriptPath>./jsx/hostscript.jsx</ScriptPath><!--アプリケーションを直接コントロールする為の関数等を収容したExtendscriptファイルを指定します。-->
+				</Resources>
+				<Lifecycle>
+					<AutoVisible>true</AutoVisible>
+				</Lifecycle>
+				<UI>
+					<Type>Panel</Type>
+					<Menu>Template Extension</Menu><!--ここで指定した名前がウインドウｰ>エクステンション メニューに表示されます。-->
+					<Geometry>
+						<Size><!--デフォルトのパネルサイズです。最大サイズ・最小サイズの指定もできますがmanifest.xmlの解説を読んで下さい。-->
+							<Height>200</Height>
+							<Width>300</Width>
+						</Size>
+					</Geometry>
+					<!--パネルをアイコン化した時に表示されるアイコンファイルを指定します。22px✕22px前後のものを居用意して下さい。-->
+					<!--<Icons>
+						<Icon Type="Normal">./icons/regular.png</Icon>
+						<Icon Type="RollOver">./icons/active.png</Icon>
+					</Icons>-->
+				</UI>
+			</DispatchInfo>
+		</Extension>
+	</DispatchInfoList>
+</ExtensionManifest>

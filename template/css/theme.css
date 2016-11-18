@@ -1,0 +1,69 @@
+/*
+This stylesheet represents CC app styles
+Empty classes will be edited at runtime with dynamic app values
+*/
+
+
+input[type="radio"] {
+    -webkit-appearance: none;
+    display:inline-block;    
+    margin:2px;
+    width:12px;
+    height:12px;
+    background-color: #AAAAAA;
+    border-color: #AAAAAA;
+    border-style:solid;
+    border-radius:6px;    
+}
+input[type="radio"] + label{
+    display:inline-block;
+    vertical-align:super;
+}
+input[type="radio"]:checked {
+    background-color: #333333;
+}
+input[type="text"] {
+	width: 90%;
+	margin-left: 5px;
+}
+
+.hostFont{
+	width: auto;
+}
+.hostBgd{}
+.hostElt{}
+
+.messe_bdy {
+	margin-top: 5px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	background-color: #EEEEEE;
+	color: #000000;
+	padding-left: 3px;
+	padding-top: 3px;
+	padding-right: 3px;
+	padding-bottom: 3px;
+	line-height: 14px;
+	font-size:10px
+	text-shadow:none
+	text-align: left;
+	-webkit-box-sizing: inherit;
+	-moz-box-sizing: inherit;
+	box-sizing: inherit;
+	overflow: scroll;
+}
+
+if_base {
+	margin-top: 5px;
+	margin-left: 5px;
+	padding-left: 3px;
+	line-height: 14px;
+	font-size:10px
+	text-shadow:none
+	text-align: left;
+	-webkit-box-sizing: inherit;
+	-moz-box-sizing: inherit;
+	box-sizing: inherit;
+	overflow: scroll;
+	}
