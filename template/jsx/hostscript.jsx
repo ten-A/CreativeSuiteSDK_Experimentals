@@ -1,1 +1,1 @@
-function callExtendscriptFunc(st) {	alert(st);	}//こちらのファイルは完全なExtendscriptファイルです。ESTK等で予めデバッグしておくことをお勧めします。//CEP側にreturnを返す事も可能ですが、CEP側のJavascriptは非同期動作の為、ちょっとした手順が必要になります。//また、変数を保持したい場合はapp.preferencesにカスタム設定を盛り込むか//CEP側のcookeやlocalStorage、sessionStorage等を利用するとよいでしょう。//詳しくは手抜きLabをご確認下さい。
+function bmi(num) {	var bmi = num[1] / (num[0] * num[0]) * 10000;	var st = "";	if (bmi>30) st = " Club Over 30 ﾍﾖｳｺｿ";	else if (bmi<20) st = " ﾔｾｽｷﾞﾃﾞｽ､ﾓｳﾁｯﾄﾀﾍﾞﾏｾｳ";	else st = " ﾌﾂｳｽｷﾞﾃｵﾓｼﾛｸﾅｲﾈ"	alert("ｱﾅﾀﾉBIMｹｰｻﾝｼﾀﾈ\n"+ bmi + "");	}

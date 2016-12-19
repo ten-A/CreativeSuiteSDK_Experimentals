@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionManifest Version="6.0" ExtensionBundleId="net.sytes.chuwa.pscallback2" ExtensionBundleVersion="1.0.0"
+        ExtensionBundleName="pscallback2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Author><![CDATA[Ten]]></Author>
+    <Abstract><![CDATA[]]></Abstract>
+    <ExtensionList>
+        <Extension Id="net.sytes.chuwa.pscallback2" Version="1.0.0" />
+    </ExtensionList>
+    <ExecutionEnvironment>
+        <HostList>
+            <Host Name="PHXS" Version="16.0"/>
+            <Host Name="PHSP" Version="16.0"/>
+        </HostList>
+        <LocaleList>
+            <Locale Code="All" />
+        </LocaleList>
+        <RequiredRuntimeList>
+            <RequiredRuntime Name="CSXS" Version="6.0" />
+        </RequiredRuntimeList>
+    </ExecutionEnvironment>
+    <DispatchInfoList>
+        <Extension Id="net.sytes.chuwa.pscallback2">
+            <DispatchInfo >
+                <Resources>
+                <MainPath>./index.html</MainPath>
+                </Resources>
+                <Lifecycle>
+                    <AutoVisible>false</AutoVisible>
+                     <StartOn>
+                        <Event>applicationActivate</Event>
+                    </StartOn>
+                </Lifecycle>
+                <UI>
+                    <Type>Panel</Type>
+                    <Geometry>
+                        <Size>
+                            <Height>1</Height>
+                            <Width>1</Width>
+                        </Size>
+                    </Geometry>
+                    <Icons>
+                    </Icons>
+                </UI>
+            </DispatchInfo>
+        </Extension>
+    </DispatchInfoList>
+</ExtensionManifest>
