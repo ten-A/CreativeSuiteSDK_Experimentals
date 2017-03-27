@@ -23,7 +23,7 @@
 /*
 How to set and get messages.
 1.Set message
-Make key and value pair(String) and join ",". Build custom message and dispatch it.
+Make key and value pair(String) and join with delimter ",". Build custom message and dispatch it.
 
 Ex:
 var customMessage = new VulcanMessage("vulcan.SuiteMessage.setMessage);
