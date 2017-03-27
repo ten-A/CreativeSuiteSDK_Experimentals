@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ExtensionManifest Version="6.0" ExtensionBundleId="net.sytes.chuwa.psGrovalStorage" ExtensionBundleVersion="1.0.0"
+        ExtensionBundleName="testVulcan" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Author><![CDATA[Ten]]></Author>
+    <Abstract><![CDATA[]]></Abstract>
+    <ExtensionList>
+        <Extension Id="net.sytes.chuwa.psGrovalStorage" Version="1.0.0" />
+    </ExtensionList>
+    <ExecutionEnvironment>
+        <HostList>
+            <Host Name="PHXS" Version="16.0"/>
+            <Host Name="PHSP" Version="16.0"/>
+        </HostList>
+        <LocaleList>
+            <Locale Code="All" />
+        </LocaleList>
+        <RequiredRuntimeList>
+            <RequiredRuntime Name="CSXS" Version="6.0" />
+        </RequiredRuntimeList>
+    </ExecutionEnvironment>
+    <DispatchInfoList>
+        <Extension Id="net.sytes.chuwa.psGrovalStorage">
+            <DispatchInfo >
+                <Resources>
+                <MainPath>./index.html</MainPath>
+                </Resources>
+                <Lifecycle>
+                    <AutoVisible>false</AutoVisible>
+                     <StartOn>
+                        <Event>applicationActivate</Event>
+                    </StartOn>
+                </Lifecycle>
+                <UI>
+                    <Type>Custom</Type>
+                    <Geometry>
+                        <Size>
+                            <Height>1</Height>
+                            <Width>1</Width>
+                        </Size>
+                    </Geometry>
+                    <Icons>
+                    </Icons>
+                </UI>
+            </DispatchInfo>
+        </Extension>
+    </DispatchInfoList>
+</ExtensionManifest>
