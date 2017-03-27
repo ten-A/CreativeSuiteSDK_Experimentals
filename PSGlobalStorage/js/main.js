@@ -31,7 +31,7 @@ customMessage.setPayload("KEY" + "," + "VALUE");
 VulcanInterface.dispatchMessage(customMessage);
 
 2.Get message
-Need 2 arguments KEY and Listener name whitch you can recieve value. Sets listener and listen it. Build message and dispatch it.
+Need 2 arguments KEY and Listener name which you can recieve value. Sets listener and listen it. Build message and dispatch it.
 
 Ex:
 VulcanInterface.addMessageListener("vulcan.SuiteMessage.recieve."+"LISTENER_NAME", recieve);
