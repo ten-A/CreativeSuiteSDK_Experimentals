@@ -11,24 +11,24 @@
 	<ExecutionEnvironment>
 		<HostList>
 			<!-- 各アプリケーションのHostのコメントアウトを削除して有効化します。バージョンは２種類の書き方があって、数値のみの場合は最低バージョン、数値を配列で用意すると動作可能バージョンレンジとなります。PhotoshopはCC以降スタンダードとエクステンデッドを廃止しましたが、CC以降でもPHXSとPHSP両方を指定して下さい。 -->
-			<!-- Photoshop -->
+			<!-- Photoshop CC2017->18, CC2015->17, CC2014->16, CC->15 -->
 			<!-- <Host Name="PHXS" Version="[15.0,15.9]" />-->
 			<!-- <Host Name="PHSP" Version="[15.0,15.9]" />-->
-			<!-- Illustrator -->
+			<!-- Illustrator CC2017->21, CC2015->20, CC2014->19, CC->18 -->
 			<!-- <Host Name="ILST" Version="[18.0,18.9]" />-->
-			<!-- InDesign -->
+			<!-- InDesign CC2017->12, CC2015->11, CC2014->10, CC->9 -->
 			<!-- <Host Name="IDSN" Version="[10.0,10.9]" /> -->
-			<!-- InCopy -->
+			<!-- InCopy CC2017->12, CC2015->11, CC2014->10, CC->9 -->
 			<!-- <Host Name="AICY" Version="[10.0,10.9]" /> -->
-			<!-- Premiere -->
+			<!-- Premiere CC2017->11, CC2015->10, CC2014->9 CC->8 -->
 			<!-- <Host Name="PPRO" Version="[8.0,8.9]" /> -->
-			<!-- AfterEffects -->
+			<!-- AfterEffects CC2017->14, CC2015->13 -->
 			<!-- <Host Name="AEFT" Version="[13.0,13.9]" /> -->
-			<!-- Audition -->
+			<!-- Audition CC2017->8 -->
 			<!-- <Host Name="AUDT" Version="8.0" />   -->
-			<!-- PRELUDE -->
+			<!-- PRELUDE CC2017->6, CC2015->5, CC2014->4, CC->3-->
 			<!-- <Host Name="PRLD" Version="3.0" />   -->
-			<!-- FLASH Pro -->
+			<!-- FLASH/Animate Pro CC2017->16, CC2015->15 CC2014->14 -->
 			<!-- <Host Name="FLPR" Version="[14.0,15.9]" /> -->
 		</HostList>
 		<LocaleList>
@@ -57,7 +57,8 @@
 							<Width>300</Width>
 						</Size>
 					</Geometry>
-					<!--パネルをアイコン化した時に表示されるアイコンファイルを指定します。22px✕22px前後のものを居用意して下さい。-->
+					<!--パネルをアイコン化した時に表示されるアイコンファイルを指定します。22px✕22px前後のものをご用意して下さい。-->
+					<!--ハイレゾ対応は2倍のピクセルサイズのものを用意してファイル名を「"通常ファイル名"+@2X.png」とします。AIでカスタムアイコンが表示されない場合はこの@2Xアイコンを追加してみて下さい。-->
 					<!--<Icons>
 						<Icon Type="Normal">./icons/regular.png</Icon>
 						<Icon Type="RollOver">./icons/active.png</Icon>
