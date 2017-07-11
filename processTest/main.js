@@ -5,7 +5,7 @@ function createProess(){
 		var stdoutResult = window.cep.process.stdout(gPID, function(output) {
 			console.log(output);
 			console.log(output.match(/\s+?(\d+).+Illustrator/));
-			alert("Illustrators gPID :  " + RegExp.$1);
+			alert("Illustrators PID :  " + RegExp.$1);
 			});
 		}
 	else {
