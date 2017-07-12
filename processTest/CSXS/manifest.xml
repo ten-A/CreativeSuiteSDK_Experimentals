@@ -22,7 +22,7 @@
             <DispatchInfo >
                 <Resources>
                 <MainPath>./index.html</MainPath>
-                <ScriptPath>./hostscript.jsx</ScriptPath>
+                <!--<ScriptPath>./hostscript.jsx</ScriptPath>-->
                 </Resources>
                 <Lifecycle>
                     <AutoVisible>true</AutoVisible>
@@ -32,8 +32,8 @@
                     <Menu>Create Process</Menu>
                     <Geometry>
                         <Size>
-                            <Height>420</Height>
-                            <Width>360</Width>
+                            <Height>200</Height>
+                            <Width>160</Width>
                         </Size>
                     </Geometry>
                     <Icons>
