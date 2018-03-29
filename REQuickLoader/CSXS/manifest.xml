@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<ExtensionManifest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ExtensionBundleId="net.sytes.chuwa.requickloader" ExtensionBundleVersion="1.0.0" Version="6.0">
+	<Author>
+		<![CDATA[Ten]]>
+	</Author>	<ExtensionList>
+		<Extension Id="net.sytes.chuwa.requickloader" Version="1.0"/>
+	</ExtensionList>
+	<ExecutionEnvironment>
+		<HostList>
+			<Host Name="IDSN" Version="9.0" />
+		</HostList>
+		<LocaleList>
+			<Locale Code="All"/>
+		</LocaleList>
+		<RequiredRuntimeList>
+			<RequiredRuntime Name="CSXS" Version="6.0"/>
+		</RequiredRuntimeList>
+	</ExecutionEnvironment>
+	<DispatchInfoList>
+		<Extension Id="net.sytes.chuwa.requickloader">
+			<DispatchInfo>
+				<Resources>
+					<MainPath>./index.html</MainPath>
+					<ScriptPath>./jsx/hostscript.jsx</ScriptPath>
+				</Resources>
+				<Lifecycle>
+					<AutoVisible>true</AutoVisible>
+				</Lifecycle>
+				<UI>
+					<Type>Panel</Type>
+					<Menu>RE Quick Loader</Menu>
+					<Geometry>
+						<Size>
+							<Height>220</Height>
+							<Width>330</Width>
+						</Size>
+						<MaxSize>
+							<Height>500</Height>
+							<Width>600</Width>
+						</MaxSize>
+					</Geometry>
+					<Icons>
+					</Icons>
+				</UI>
+			</DispatchInfo>
+		</Extension>
+	</DispatchInfoList>
+</ExtensionManifest>

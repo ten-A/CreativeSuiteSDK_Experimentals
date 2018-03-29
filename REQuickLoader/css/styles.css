@@ -1,0 +1,28 @@
+
+
+#content {
+    margin-right:0px;
+    margin-left:0px;
+    vertical-align:middle;
+    width:100%;
+}
+
+.leftbx {
+    margin:5px;
+     float:left;
+     }
+body {
+    font-size : 10px;
+    }
+.leftbx {
+    margin:5px;
+     float:left;
+     }
+body {
+    font-size : 10px;
+    }
+.clearfix:after {
+  display: block;
+  clear: both;
+  content: "";
+}
