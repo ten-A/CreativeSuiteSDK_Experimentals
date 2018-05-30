@@ -3,7 +3,7 @@
 	var csInterface = new CSInterface(); //CEPのライブラリ
 
 	function init() {
-		themeManager.init(); //パネルをアプリケーションテーマカラーに同期させる為のライブラリ
+		themeSynchronizer.init(); //パネルをアプリケーションテーマカラーに同期させる為のライブラリ
 		$("#aply").click(function () {  //HTMLフォームのボタンをクリックした時に実行される関数
 			var str = $("input#str").val();  //テキストインプットの文字をstrに読み込みます。
 			csInterface.evalScript('callExtendscriptFunc("' + str + '")');
